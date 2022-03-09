@@ -29,9 +29,15 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  BookOrderByInput: { // input type
+    author?: NexusGenEnums['Sort'] | null; // Sort
+    createdAt?: NexusGenEnums['Sort'] | null; // Sort
+    title?: NexusGenEnums['Sort'] | null; // Sort
+  }
 }
 
 export interface NexusGenEnums {
+  Sort: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -57,6 +63,10 @@ export interface NexusGenObjects {
     id: number; // Int!
     title: string; // String!
   }
+  Feed: { // root type
+    books: NexusGenRootTypes['Book'][]; // [Book!]!
+    count: number; // Int!
+  }
   Like: { // root type
     book: NexusGenRootTypes['Book']; // Book!
     user: NexusGenRootTypes['User']; // User!
@@ -79,7 +89,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   AuthPayload: { // field return type
@@ -97,6 +107,10 @@ export interface NexusGenFieldTypes {
     postedBy: NexusGenRootTypes['User'] | null; // User
     title: string; // String!
   }
+  Feed: { // field return type
+    books: NexusGenRootTypes['Book'][]; // [Book!]!
+    count: number; // Int!
+  }
   Like: { // field return type
     book: NexusGenRootTypes['Book']; // Book!
     user: NexusGenRootTypes['User']; // User!
@@ -111,7 +125,7 @@ export interface NexusGenFieldTypes {
   }
   Query: { // field return type
     book: NexusGenRootTypes['Book'] | null; // Book
-    books: NexusGenRootTypes['Book'][]; // [Book!]!
+    feed: NexusGenRootTypes['Feed']; // Feed!
   }
   User: { // field return type
     books: NexusGenRootTypes['Book'][]; // [Book!]!
@@ -139,6 +153,10 @@ export interface NexusGenFieldTypeNames {
     postedBy: 'User'
     title: 'String'
   }
+  Feed: { // field return type name
+    books: 'Book'
+    count: 'Int'
+  }
   Like: { // field return type name
     book: 'Book'
     user: 'User'
@@ -153,7 +171,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: { // field return type name
     book: 'Book'
-    books: 'Book'
+    feed: 'Feed'
   }
   User: { // field return type name
     books: 'Book'
@@ -202,6 +220,12 @@ export interface NexusGenArgTypes {
     book: { // args
       id: number; // Int!
     }
+    feed: { // args
+      filter?: string | null; // String
+      orderBy?: NexusGenInputs['BookOrderByInput'][] | null; // [BookOrderByInput!]
+      skip?: number | null; // Int
+      take?: number | null; // Int
+    }
   }
 }
 
@@ -213,9 +237,9 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

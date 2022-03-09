@@ -1,8 +1,6 @@
-import { prisma } from "@prisma/client";
-import { extendType, nonNull, objectType, stringArg, intArg } from "nexus";
-import { typeScriptFileExtension } from "nexus/dist/utils";
-import { NexusGenObjects } from '../../nexus-typegen';
-import { User } from "./User";
+import { Prisma } from "@prisma/client";
+import { extendType, nonNull, objectType, stringArg, intArg, inputObjectType, enumType, arg, list } from "nexus";
+
 
 export const Book = objectType({
     name: "Book",
@@ -36,10 +34,36 @@ export const Book = objectType({
 export const BookQuery = extendType({
     type: "Query",
     definition(t) {
-        t.nonNull.list.nonNull.field("books", {
-            type: "Book",
-            resolve(parent, args, context, info) {
-                return context.prisma.book.findMany();
+        t.nonNull.field("feed", {
+            type: "Feed",
+            args: {
+                filter: stringArg(),
+                skip: intArg(),
+                take: intArg(),
+                orderBy: arg({ type: list(nonNull(BookOrderByInput)) })
+            },
+            async resolve(parent, args, context) {
+                const where = args.filter ? {
+                    OR: [
+                        { title: { contains: args.filter }},
+                        { author: { contains: args.filter }},
+                        { genre: { contains: args.filter}},
+                    ],
+                } : {}
+
+                const books = await context.prisma.book.findMany({
+                    where,
+                    skip: args?.skip as number | undefined,
+                    take: args?.take as number | undefined,
+                    orderBy: args?.orderBy as Prisma.Enumerable<Prisma.BookOrderByWithRelationInput> | undefined,
+                });
+
+                const count = await context.prisma.book.count({ where });
+
+                return {
+                    books,
+                    count,
+                }
             }
         });
         t.field("book", {
@@ -152,3 +176,25 @@ export const BookMutation = extendType({
         })
     }
 })
+
+export const BookOrderByInput = inputObjectType({
+    name: "BookOrderByInput",
+    definition(t) {
+        t.field("title", { type: Sort });
+        t.field("author", { type: Sort });
+        t.field("createdAt", { type: Sort });
+    },
+});
+
+export const Sort = enumType({
+    name: "Sort",
+    members: ["asc", "desc"]
+});
+
+export const Feed = objectType({
+    name: "Feed",
+    definition(t) {
+        t.nonNull.list.nonNull.field("books", { type: Book });
+        t.nonNull.int("count");
+    },
+});
