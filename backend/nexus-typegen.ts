@@ -4,9 +4,24 @@
  */
 
 
-
-
-
+import type { Context } from "./src/context"
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    dateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,19 +40,35 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
+  AuthPayload: { // root type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Book: { // root type
     author: string; // String!
     body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     date: number; // Int!
     genre: string; // String!
     id: number; // Int!
     title: string; // String!
   }
+  Like: { // root type
+    book: NexusGenRootTypes['Book']; // Book!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Mutation: {};
   Query: {};
+  User: { // root type
+    email: string; // String!
+    id: number; // Int!
+    password: string; // String!
+    username: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -51,36 +82,86 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  AuthPayload: { // field return type
+    token: string; // String!
+    user: NexusGenRootTypes['User']; // User!
+  }
   Book: { // field return type
     author: string; // String!
     body: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     date: number; // Int!
     genre: string; // String!
     id: number; // Int!
+    likers: NexusGenRootTypes['User'][]; // [User!]!
+    postedBy: NexusGenRootTypes['User'] | null; // User
     title: string; // String!
+  }
+  Like: { // field return type
+    book: NexusGenRootTypes['Book']; // Book!
+    user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
     createBook: NexusGenRootTypes['Book']; // Book!
+    deleteBook: NexusGenRootTypes['Book']; // Book!
+    like: NexusGenRootTypes['Like'] | null; // Like
+    login: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    signup: NexusGenRootTypes['AuthPayload']; // AuthPayload!
+    updateBook: NexusGenRootTypes['Book']; // Book!
   }
   Query: { // field return type
+    book: NexusGenRootTypes['Book'] | null; // Book
     books: NexusGenRootTypes['Book'][]; // [Book!]!
+  }
+  User: { // field return type
+    books: NexusGenRootTypes['Book'][]; // [Book!]!
+    email: string; // String!
+    id: number; // Int!
+    likes: NexusGenRootTypes['Book'][]; // [Book!]!
+    password: string; // String!
+    username: string; // String!
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthPayload: { // field return type name
+    token: 'String'
+    user: 'User'
+  }
   Book: { // field return type name
     author: 'String'
     body: 'String'
+    createdAt: 'DateTime'
     date: 'Int'
     genre: 'String'
     id: 'Int'
+    likers: 'User'
+    postedBy: 'User'
     title: 'String'
+  }
+  Like: { // field return type name
+    book: 'Book'
+    user: 'User'
   }
   Mutation: { // field return type name
     createBook: 'Book'
+    deleteBook: 'Book'
+    like: 'Like'
+    login: 'AuthPayload'
+    signup: 'AuthPayload'
+    updateBook: 'Book'
   }
   Query: { // field return type name
+    book: 'Book'
     books: 'Book'
+  }
+  User: { // field return type name
+    books: 'Book'
+    email: 'String'
+    id: 'Int'
+    likes: 'Book'
+    password: 'String'
+    username: 'String'
   }
 }
 
@@ -92,6 +173,34 @@ export interface NexusGenArgTypes {
       date: number; // Int!
       genre: string; // String!
       title: string; // String!
+    }
+    deleteBook: { // args
+      id: number; // Int!
+    }
+    like: { // args
+      bookId: number; // Int!
+    }
+    login: { // args
+      email: string; // String!
+      password: string; // String!
+    }
+    signup: { // args
+      email: string; // String!
+      password: string; // String!
+      username: string; // String!
+    }
+    updateBook: { // args
+      author?: string | null; // String
+      body?: string | null; // String
+      date?: number | null; // Int
+      genre?: string | null; // String
+      id: number; // Int!
+      title?: string | null; // String
+    }
+  }
+  Query: {
+    book: { // args
+      id: number; // Int!
     }
   }
 }
@@ -127,7 +236,7 @@ export type NexusGenFeaturesConfig = {
 }
 
 export interface NexusGenTypes {
-  context: any;
+  context: Context;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   inputTypeShapes: NexusGenInputs & NexusGenEnums & NexusGenScalars;
