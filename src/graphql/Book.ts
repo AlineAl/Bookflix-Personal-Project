@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { extendType, nonNull, objectType, stringArg, intArg, inputObjectType, enumType, arg, list } from "nexus";
 
-
 export const Book = objectType({
     name: "Book",
     definition(t) {
