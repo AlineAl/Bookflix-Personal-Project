@@ -11,7 +11,8 @@ export const Book = objectType({
         t.nonNull.string("author");
         t.nonNull.string("genre");
         t.nonNull.int("date");
-        t.nonNull.dateTime("createdAt")
+        t.nonNull.string("url");
+        t.nonNull.dateTime("createdAt");
         t.field("postedBy", {
             type: "User",
             resolve(parent, args, context) {
@@ -94,6 +95,7 @@ export const BookMutation = extendType({
                 author: nonNull(stringArg()),
                 genre: nonNull(stringArg()),
                 date: nonNull(intArg()),
+                url: nonNull(stringArg()),
             },
             resolve(parent, args, context) {
                 const { userId } = context;
@@ -109,6 +111,7 @@ export const BookMutation = extendType({
                         author: args.author,
                         genre: args.genre,
                         date: args.date,
+                        url: args.url,
                         postedBy: {
                             connect: {
                                 id: userId
@@ -128,7 +131,8 @@ export const BookMutation = extendType({
                 author: stringArg(),
                 genre: stringArg(),
                 date: intArg(),
-                id: nonNull(intArg())
+                url: stringArg(),
+                id: nonNull(intArg()),
             },
             async resolve(parent, args, context) {
                 const { userId } = context;
@@ -147,6 +151,7 @@ export const BookMutation = extendType({
                         author: args.author || undefined,
                         genre: args.genre || undefined,
                         date: args.date || undefined,
+                        url: args.url || undefined,
                     }
                 })
 

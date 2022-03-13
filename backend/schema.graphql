@@ -17,6 +17,7 @@ type Book {
   likers: [User!]!
   postedBy: User
   title: String!
+  url: String!
 }
 
 input BookOrderByInput {
@@ -41,12 +42,12 @@ type Like {
 }
 
 type Mutation {
-  createBook(author: String!, body: String!, date: Int!, genre: String!, title: String!): Book!
+  createBook(author: String!, body: String!, date: Int!, genre: String!, title: String!, url: String!): Book!
   deleteBook(id: Int!): Book!
   like(bookId: Int!): Like
   login(email: String!, password: String!): AuthPayload!
   signup(email: String!, password: String!, username: String!): AuthPayload!
-  updateBook(author: String, body: String, date: Int, genre: String, id: Int!, title: String): Book!
+  updateBook(author: String, body: String, date: Int, genre: String, id: Int!, title: String, url: String): Book!
 }
 
 type Query {

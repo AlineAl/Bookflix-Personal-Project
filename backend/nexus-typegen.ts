@@ -62,6 +62,7 @@ export interface NexusGenObjects {
     genre: string; // String!
     id: number; // Int!
     title: string; // String!
+    url: string; // String!
   }
   Feed: { // root type
     books: NexusGenRootTypes['Book'][]; // [Book!]!
@@ -106,6 +107,7 @@ export interface NexusGenFieldTypes {
     likers: NexusGenRootTypes['User'][]; // [User!]!
     postedBy: NexusGenRootTypes['User'] | null; // User
     title: string; // String!
+    url: string; // String!
   }
   Feed: { // field return type
     books: NexusGenRootTypes['Book'][]; // [Book!]!
@@ -152,6 +154,7 @@ export interface NexusGenFieldTypeNames {
     likers: 'User'
     postedBy: 'User'
     title: 'String'
+    url: 'String'
   }
   Feed: { // field return type name
     books: 'Book'
@@ -191,6 +194,7 @@ export interface NexusGenArgTypes {
       date: number; // Int!
       genre: string; // String!
       title: string; // String!
+      url: string; // String!
     }
     deleteBook: { // args
       id: number; // Int!
@@ -214,6 +218,7 @@ export interface NexusGenArgTypes {
       genre?: string | null; // String
       id: number; // Int!
       title?: string | null; // String
+      url?: string | null; // String
     }
   }
   Query: {

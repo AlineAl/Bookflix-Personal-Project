@@ -23,6 +23,7 @@ model Book {
   author     String
   genre      String
   date       Int
+  url        String
   createdAt  DateTime @default(now())
   postedById Int?
   postedBy   User?    @relation(name:"PostedBy", fields: [postedById], references: [id])
