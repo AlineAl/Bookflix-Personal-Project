@@ -11,9 +11,6 @@
       "typeRoots": [
         "node_modules/@types"
       ],
-      "types": [
-        "typed-graphql"
-      ],
       "sourceMap": true,
       "esModuleInterop": true
     },
