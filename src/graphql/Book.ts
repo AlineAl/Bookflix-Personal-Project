@@ -12,7 +12,6 @@ export const Book = objectType({
         t.nonNull.string("genre");
         t.nonNull.int("date");
         t.nonNull.string("url");
-        t.nonNull.dateTime("createdAt");
         t.field("postedBy", {
             type: "User",
             resolve(parent, args, context) {
