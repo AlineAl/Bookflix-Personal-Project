@@ -8,6 +8,9 @@
       "strict": true,
       "rootDir": ".",
       "outDir": "dist",
+      "typeRoots": [
+        "node_modules/@types"
+      ],
       "sourceMap": true,
       "esModuleInterop": true
     }
