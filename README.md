@@ -26,4 +26,8 @@ https://www.apollographql.com/docs/tutorial/resolvers/
 
 https://nexusjs.org/docs/plugins/prisma/overview
 
+https://www.apollographql.com/docs/react/v2/integrations/react-native/
+
+https://reactnative.dev/docs/style
+
 ## To access this project
