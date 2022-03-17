@@ -8,9 +8,10 @@ import {
   createHttpLink,
   InMemoryCache
 } from '@apollo/client';
+import { ENDPOINT_API } from "@env"
 
 const httpLink = createHttpLink({
-  uri: 'https://bookflix-project-training.herokuapp.com/graphql'
+  uri: ENDPOINT_API
 });
 
 const client = new ApolloClient({

@@ -28,7 +28,6 @@ const BooksList = () => {
                 <FlatList
                     data={data.feed.books}
                     refreshing={data.networkStatus === 4}
-                    onRefresh={() => data.refetch()}
                     renderItem={({ item }) =>
                     <View>
                         <Text>{item.title}</Text>
