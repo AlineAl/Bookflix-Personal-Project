@@ -1,29 +1,14 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { useQuery, gql } from "@apollo/client";
-
-const GET_BOOKS = gql`
-    query BooksList {
-        feed {
-            books {
-                id
-                title
-                body
-                author
-                date
-                genre
-                url
-            }
-        }
-    }
-`
+import { FlatList, SafeAreaView, Text, View } from 'react-native';
+import { useQuery } from "@apollo/client";
+import tw from 'twrnc';
+import GET_BOOKS from '../graphql/BooksList';
 
 const BooksList = () => {
     const { data, loading } = useQuery(GET_BOOKS);
 
     return(
-        <View style={styles.container}>
+        <SafeAreaView>
             {loading ? <Text>Loading...</Text> :
                 <FlatList
                     data={data.feed.books}
@@ -36,25 +21,8 @@ const BooksList = () => {
                     }
                 />
             }
-        </View>
+        </SafeAreaView>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: '#BF1A2C'
-    },
-    loading: {
-        margin: 50,
-    },
-    title: {
-        fontSize: 24,
-        margin: 20,
-    },
-  });
 
 export default BooksList;
