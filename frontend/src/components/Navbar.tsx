@@ -1,16 +1,27 @@
 import React from 'react';
-import { SafeAreaView, Text, View, Image } from 'react-native';
+import { SafeAreaView, Text, View, Image, StyleSheet } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
 import tw from 'twrnc';
+import { FrederickatheGreat_400Regular } from '@expo-google-fonts/fredericka-the-great'
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 const NavBar = () => {
+    let [fontsLoaded] = useFonts({
+        FrederickatheGreat_400Regular
+    });
+
+    if(!fontsLoaded) {
+        return <AppLoading />
+    }
 
     return (
         <SafeAreaView style={tw`bg-transparent h-16`}>
             <View style={tw`flex-row justify-between mt-6 mx-4`}>
                 <View>
-                    <Text style={tw`text-white text-xl`}>Bookflix</Text>
+                    <Text style={styles.textStaatliches}>Bookflix</Text>
                 </View>
                 <View style={tw`flex-row items-center`}>
                     <FontAwesomeIcon style={tw`text-white mr-8`} icon={ faMagnifyingGlass } />
@@ -20,5 +31,13 @@ const NavBar = () => {
         </SafeAreaView>
     )
 }
+
+const styles = StyleSheet.create({
+    textStaatliches: {
+        fontFamily: "FrederickatheGreat_400Regular",
+        color: "#B1050E",
+        fontSize: 24
+    }
+})
 
 export default NavBar;

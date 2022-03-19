@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { AppRegistry } from 'react-native';
-import { StyleSheet, Text, View } from 'react-native';
-import Header from './src/components/Header';
+import { View } from 'react-native';
+import BooksList from './src/components/BooksList';
 import {
   ApolloProvider,
   ApolloClient,
@@ -23,7 +23,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
         <View>
-          <Header />
+          <BooksList />
         </View>
     </ApolloProvider>
   );
