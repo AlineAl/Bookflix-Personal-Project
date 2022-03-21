@@ -1,23 +1,25 @@
 import React from 'react';
 import { useState } from 'react';
-import { FlatList, SafeAreaView, Text, Button, Pressable, View, Image } from 'react-native';
+import { FlatList, SafeAreaView, Text, Pressable, View, Image, ScrollView } from 'react-native';
 
 import Modal from 'react-native-modal';
 import Header from './Header';
+// import OneBook from './Book';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from "@apollo/client";
 import GET_BOOKS from '../graphql/BooksList';
+import OneBook from './Book';
 import tw from 'twrnc';
 
-const BooksList = () => {
+const BooksList = ({ navigation: { push }}:any) => {
     const { data, loading } = useQuery(GET_BOOKS);
 
     const [isModalVisible, setModalVisible] = useState(false);
-
+    
     const toggleModal = () => {
-      setModalVisible(!isModalVisible);
+        setModalVisible(!isModalVisible);
     };
 
     return(
@@ -31,27 +33,32 @@ const BooksList = () => {
                         data={data.feed.books}
                         refreshing={data.networkStatus === 4}
                         horizontal
-                        renderItem={({ item, index }) =>
+                        keyExtractor={({ id }, index) => id}
+                        renderItem={({ item }) =>
                             <View>
-                                <Pressable onPress={toggleModal}>
+                                <Pressable onPress={() => {
+                                    push("Book", {
+                                        id: item.id
+                                    })
+                                }}>
                                     <Image style={tw`w-26 h-36 ml-2 rounded`} source={{uri:`${item.url}`}} />
                                 </Pressable>
-                                <Modal 
-                                    isVisible={isModalVisible}
-                                    backdropOpacity={0}
-                                    swipeDirection={['up', 'left', 'right', 'down']}
-                                    style={tw`m-0 flex justify-end`}
-                                >
-                                    <View style={tw`w-full h-60 bg-[#181818] rounded-t-xl`}>
-                                        <Pressable onPress={toggleModal}>
-                                            <View style={tw`mt-4 mr-4 flex items-end`}><FontAwesomeIcon size={ 30 } style={tw`text-white bg-[#252526] rounded-full`} icon={ faXmark } /></View>
-                                        </Pressable>
-                                        <Image style={tw`w-26 h-36 ml-2 rounded`} source={{uri:`${data.feed.books[index].url}`}} />
-                                    </View>
-                                </Modal>
                             </View>
                         }
                     />
+                    <Modal 
+                        isVisible={isModalVisible}
+                        key={data.feed.books.id}
+                        backdropOpacity={0}
+                        swipeDirection={['up', 'left', 'right', 'down']}
+                        style={tw`m-0 flex justify-end`}
+                    >
+                        <View style={tw`w-full h-60 bg-[#181818] rounded-t-xl`}>
+                            <Pressable onPress={toggleModal}>
+                                <View style={tw`mt-4 mr-4 flex items-end`}><FontAwesomeIcon size={ 30 } style={tw`text-white bg-[#252526] rounded-full`} icon={ faXmark } /></View>
+                            </Pressable>
+                        </View>
+                    </Modal>
                 </View>
             }
         </SafeAreaView>
