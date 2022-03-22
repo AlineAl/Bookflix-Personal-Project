@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Pressable, Alert, SafeAreaView, Text, View, ImageBackground } from 'react-native';
+import { StyleSheet, Pressable, Alert, Text, View, ImageBackground } from 'react-native';
 import NavBar from './Navbar';
 import tw from 'twrnc';
 
