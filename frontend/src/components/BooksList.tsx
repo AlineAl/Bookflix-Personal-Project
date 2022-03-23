@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { FlatList, SafeAreaView, Text, Pressable, View, Image } from 'react-native';
+import { FlatList, ScrollView, Text, Pressable, View, Image } from 'react-native';
 
 import Modal from 'react-native-modal';
 import Header from './Header';
@@ -11,7 +11,7 @@ import { useQuery } from "@apollo/client";
 import GET_BOOKS from '../graphql/BooksList';
 import tw from 'twrnc';
 
-const BooksList = ({props}:any) => {
+const BooksList = ({ navigation: { navigate }}:any) => {
     const { data, loading } = useQuery(GET_BOOKS);
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -35,7 +35,7 @@ const BooksList = ({props}:any) => {
     };
 
     return(
-        <SafeAreaView style={tw`h-full bg-black`}>
+        <ScrollView style={tw`h-full bg-black`}>
             {loading ? <View style={tw`h-full bg-black flex justify-center items-center`}><Text style={tw`text-[#B1050E] text-2xl font-bold`}>Bookflix</Text></View> :
                 <View>
                     <Header />
@@ -64,7 +64,7 @@ const BooksList = ({props}:any) => {
                         swipeDirection={['up', 'left', 'right', 'down']}
                         style={tw`m-0 flex justify-end`}
                     >
-                        <View style={tw`w-full h-60 bg-[#181818] rounded-t-xl`}>
+                        <View style={tw`w-full h-56 bg-[#181818] rounded-t-xl`}>
                             <View style={tw`flex flex-row justify-around mt-2`}>
                                 <Image style={tw`w-26 h-36 ml-2 rounded`} source={{uri:`${urlBook}`}} />
                                 <View style={tw`w-60 ml-2`}>
@@ -87,14 +87,22 @@ const BooksList = ({props}:any) => {
                                 </View>
                             </View>
                             <View style={tw`flex flex-row justify-center mt-4`}>
-                                <View style={tw`mr-4`}><FontAwesomeIcon size={ 30 } style={tw`text-white bg-[#252526] rounded-full`} icon={ faPlay } /></View>
-                                <View><FontAwesomeIcon size={ 30 } style={tw`text-white bg-[#252526] rounded-full `} icon={ faHeart } /></View>
+                                <Pressable onPress={() => {
+                                    navigate("Book", {
+                                        id: idBook
+                                    })
+                                }}>
+                                    <View style={tw`mr-4`}>
+                                        <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faPlay } />
+                                    </View>
+                                </Pressable>
+                                <View><FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faHeart } /></View>
                             </View>
                         </View>
                     </Modal>
                 </View>
             }
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 

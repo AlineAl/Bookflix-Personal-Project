@@ -1,7 +1,7 @@
 import { AppRegistry } from 'react-native';
-import { View } from 'react-native';
 import BooksList from './src/components/BooksList';
 import OneBook from './src/components/Book';
+import SearchBook from './src/components/SearchBook';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
@@ -27,9 +27,10 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator  screenOptions={{headerShown: false}}>
             <Stack.Screen name="BookFlix" component={BooksList} />
             <Stack.Screen name="Book" component={OneBook} />
+            <Stack.Screen name="SearchBook" component={SearchBook} />
           </Stack.Navigator>
         </NavigationContainer>
     </ApolloProvider>

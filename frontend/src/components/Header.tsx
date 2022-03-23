@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Pressable, Alert, Text, View, ImageBackground } from 'react-native';
+import { useQuery } from "@apollo/client";
+import GET_BOOKS from '../graphql/BooksList';
 import NavBar from './Navbar';
-import tw from 'twrnc';
 
+import tw from 'twrnc';
 import { DancingScript_700Bold } from '@expo-google-fonts/dancing-script';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
 
 const Header = () => {
-    let [fontsLoaded, error] = useFonts({
+    const { data } = useQuery(GET_BOOKS);
+    const [urlBook, setUrlBook] = useState();
+    
+    const randomUrl = () => {
+        const urlBooks = data.feed.books.map((book:any) => book.url);
+        setUrlBook(urlBooks[Math.floor(Math.random() * data.feed.books.length)]);
+    }
+
+    useEffect(() => {
+        randomUrl();
+    }, [])
+
+    let [fontsLoaded] = useFonts({
         DancingScript_700Bold
     });
 
@@ -19,7 +33,7 @@ const Header = () => {
 
     return(
         <View>
-            <ImageBackground style={tw`w-full h-96`} source={{uri:'https://images.unsplash.com/photo-1505663912202-ac22d4cb3707?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'}}>
+            <ImageBackground style={tw`w-full h-96`} imageStyle={{ opacity: 0.3 }} source={{uri:`${urlBook}`}}>
                 <View>
                     <NavBar />
                     <Text style={tw`text-white ml-12`}>Livres</Text>
@@ -39,7 +53,7 @@ const Header = () => {
                 <Text style={tw`text-white text-xs`}>Voyage</Text>
             </View>
             <View>
-                <Pressable style={tw`bg-white flex-row justify-center mt-4 mx-32 py-2 rounded`} onPress={() => Alert.alert('Simple Button pressed')}>
+                <Pressable style={tw`bg-white flex-row justify-center mt-4 mx-32 py-2 rounded`} onPress={() => randomUrl}>
                     <Text style={tw`text-black font-bold`}>▶︎ Une idée lecture ?</Text>
                 </Pressable>
             </View>

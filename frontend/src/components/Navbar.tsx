@@ -1,10 +1,12 @@
 import React from 'react';
-import { SafeAreaView, Text, View, Image, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, View, Image, StyleSheet, Pressable } from 'react-native';
+import { Link } from '@react-navigation/native';
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import tw from 'twrnc';
-import { FrederickatheGreat_400Regular } from '@expo-google-fonts/fredericka-the-great'
+import { FrederickatheGreat_400Regular } from '@expo-google-fonts/fredericka-the-great';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -24,7 +26,9 @@ const NavBar = () => {
                     <Text style={styles.textStaatliches}>Bookflix</Text>
                 </View>
                 <View style={tw`flex-row items-center`}>
-                    <FontAwesomeIcon style={tw`text-white mr-8`} icon={ faMagnifyingGlass } />
+                    <Link to={{screen:'SearchBook'}} style={tw`mr-8`}>
+                        <FontAwesomeIcon style={tw`text-white`} icon={ faMagnifyingGlass } />
+                    </Link>
                     <Image style={tw`w-6 h-6`} source={{uri:'https://images.unsplash.com/photo-1626423567486-9c5fcb38199f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=706&q=80'}} />
                 </View>
             </View>
