@@ -1,10 +1,31 @@
-import React from "react";
-import { ScrollView, View, Text, Pressable, Image, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { ScrollView, View, Text, Pressable, Image, TextInput, FlatList } from "react-native";
+import { useQuery } from '@apollo/client';
+import GET_BOOKS from '../graphql/BooksList';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faMagnifyingGlass, faPlay } from "@fortawesome/free-solid-svg-icons";
 import tw from 'twrnc';
 
 const SearchBook = (props:any) => {
+    const { data } = useQuery(GET_BOOKS);
+    const [filterBook, setFilterBook ] = useState();
+
+    useEffect(() => {
+        setFilterBook(data.feed.books)
+    }, [])
+
+    const searchFilter = (text:any) => {
+        if(text) {
+            const newData = data.feed.books.filter((item:any) => {
+                const itemData = item.title ? item.title.toUpperCase() : "".toUpperCase();
+                const textData = text.toUpperCase();
+                return itemData.indexOf(textData) > -1;
+            })
+            setFilterBook(newData);
+        } else {
+            setFilterBook(data.feed.books)
+        }
+    }
 
     return(
         <ScrollView style={tw`bg-black`}>
@@ -14,7 +35,38 @@ const SearchBook = (props:any) => {
                 </Pressable>
                 <Image style={tw`w-6 h-6 mr-4`} source={{uri:'https://images.unsplash.com/photo-1626423567486-9c5fcb38199f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=706&q=80'}} />
             </View>
-            <TextInput style={tw`bg-[#212227] text-white mt-4 h-10 w-full`} placeholder="Rechercher un livre" />
+            <View style={tw`flex flex-row bg-[#212227] h-12 mt-4`}>
+                <FontAwesomeIcon style={tw`text-[#bababa] mt-4 mx-6`} size={ 17 } icon={ faMagnifyingGlass }/>
+                <TextInput 
+                    style={tw`text-white flex items-center h-4 mt-4 w-full`} 
+                    placeholder="Rechercher un livre"
+                    placeholderTextColor='#bababa'
+                    onChangeText={(event) => {
+                        searchFilter(event);
+                    }}
+                />
+            </View>
+            
+            <FlatList 
+                style={tw`mt-4 mx-1`}
+                data={filterBook}
+                refreshing={data.networkStatus === 4}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) =>
+                    <View style={tw`flex flex-row items-center bg-[#181818] mb-1`}>
+                        <Image style={tw`w-36 h-20 ml-2 rounded opacity-75`} source={{uri:`${item.url}`}} />
+                        <Text style={tw`text-white ml-4 mr-8`}>{item.title}</Text>
+                        <Pressable onPress={() => {
+                                props.navigation.navigate("Book", {
+                                    id: item.id
+                                })
+                            }
+                        }>
+                            <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faPlay } />
+                        </Pressable>
+                    </View>
+                }
+            />
         </ScrollView>
     )
 }
