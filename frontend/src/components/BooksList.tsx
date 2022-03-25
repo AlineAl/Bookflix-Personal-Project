@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { FlatList, ScrollView, Text, Pressable, View, Image } from 'react-native';
+import { FlatList, ScrollView, Text, Pressable, View, Image, SectionList } from 'react-native';
 
 import Modal from 'react-native-modal';
 import Header from './Header';
@@ -41,22 +41,27 @@ const BooksList = ({ navigation: { navigate }}:any) => {
                     <Header />
                     <Text style={tw`text-white text-lg font-bold mt-6 ml-4`}>Liste de livres</Text>
 
-                    <FlatList
-                        style={tw`mt-4 mx-1`}
-                        data={data.feed.books}
-                        refreshing={data.networkStatus === 4}
-                        horizontal
-                        keyExtractor={(item) => item.id}
-                        renderItem={({ item }) =>
-                            <View>
-                                <Pressable onPress={() => {
-                                    toggleModal(item.id, item.title, item.body, item.date, item.genre, item.url, item.author)
-                                }}>
-                                    <Image style={tw`w-26 h-36 ml-2 rounded`} source={{uri:`${item.url}`}} />
-                                </Pressable>
-                            </View>
-                        }
-                    />
+                    <ScrollView horizontal>
+                        <FlatList
+                            style={tw`mt-4 mx-1`}
+                            data={data.feed.books}
+                            showsVerticalScrollIndicator={false}
+                            horizontal={false}
+                            showsHorizontalScrollIndicator={false}
+                            numColumns={data.feed.books.length / 2}
+                            refreshing={data.networkStatus === 4}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) =>
+                                <View>
+                                    <Pressable onPress={() => {
+                                        toggleModal(item.id, item.title, item.body, item.date, item.genre, item.url, item.author)
+                                    }}>
+                                        <Image style={tw`w-26 h-36 ml-2 mb-8 rounded`} source={{uri:`${item.url}`}} />
+                                    </Pressable>
+                                </View>
+                            }
+                        />
+                    </ScrollView>
 
                     <Modal 
                         isVisible={isModalVisible}
