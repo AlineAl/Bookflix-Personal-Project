@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ImageBackground, StyleSheet, Text, View, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { initialWindowSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AUTH_TOKEN } from '../constants';
 
@@ -9,9 +9,23 @@ import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import tw from 'twrnc';
 
-const Home = ({ navigation: { navigate }}:any) => {
+const Home = ({ navigation: { navigate, push }}:any) => {
+    const [token, setToken] = useState('');
 
-    const localStorageExists = AsyncStorage.getItem(AUTH_TOKEN)
+    const StorageExists = async () => {
+        try {
+           await AsyncStorage.getItem(AUTH_TOKEN)
+           .then(value => {
+               if(value !== null) {
+                   setToken(value);
+               }
+           })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    StorageExists();
 
     let [fontsLoaded] = useFonts({
         FrederickatheGreat_400Regular
@@ -26,8 +40,8 @@ const Home = ({ navigation: { navigate }}:any) => {
             <ImageBackground style={tw`w-full h-full`} imageStyle={{ opacity: 0.5 }} source={{uri: 'https://images.unsplash.com/photo-1419640303358-44f0d27f48e7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1385&q=80'}}>
                 <View style={tw`flex flex-row mt-4 items-center justify-between`}>
                     <Text style={styles.textStaatliches}>Bookflix</Text>
-                    {
-                        localStorageExists ? 
+                    {   
+                        token ? 
                             <Pressable onPress={() => {
                                 navigate("BookFlix")
                             }}>
@@ -37,8 +51,8 @@ const Home = ({ navigation: { navigate }}:any) => {
                             <Pressable onPress={() => {
                                 navigate("Login")
                             }}>
-                            <Text style={tw`text-white mr-3 uppercase`}>S'identifier</Text>
-                        </Pressable>
+                                <Text style={tw`text-white mr-3 uppercase`}>S'identifier</Text>
+                            </Pressable>
                     }
                 </View>
                 <View>
@@ -47,13 +61,20 @@ const Home = ({ navigation: { navigate }}:any) => {
                 </View>
 
                 {
-                    localStorageExists ? '' :
-                    <Pressable onPress={() =>{
-                        navigate("Signup")
-                    }
-                    }>
-                        <Text style={tw`text-white text-lg uppercase mt-10 text-center bg-[#E50815] py-2`}>Commencer</Text>
-                    </Pressable>
+                    token ? 
+                        <Pressable onPress={async () => {
+                            await AsyncStorage.removeItem(AUTH_TOKEN);
+                            push("Home")
+                        }}>
+                            <Text style={tw`text-white text-center mt-8`}>Deconnexion</Text>
+                        </Pressable>
+                    :
+                        <Pressable onPress={() =>{
+                            navigate("Signup")
+                        }
+                        }>
+                            <Text style={tw`text-white text-lg uppercase mt-10 text-center bg-[#E50815] py-2`}>Commencer</Text>
+                        </Pressable>
                 }
             </ImageBackground>
         </SafeAreaView>

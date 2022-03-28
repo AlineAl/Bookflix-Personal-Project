@@ -11,7 +11,7 @@ import { useQuery } from "@apollo/client";
 import GET_BOOKS from '../graphql/BooksList';
 import tw from 'twrnc';
 
-const BooksList = ({ navigation: { navigate }}:any) => {
+const BooksList = ({ navigation: { navigate, goBack }}:any) => {
     const { data, loading } = useQuery(GET_BOOKS);
 
     const [isModalVisible, setModalVisible] = useState(false);
@@ -45,9 +45,6 @@ const BooksList = ({ navigation: { navigate }}:any) => {
                         <FlatList
                             style={tw`mt-4 mx-1`}
                             data={data.feed.books}
-                            showsVerticalScrollIndicator={false}
-                            horizontal={false}
-                            showsHorizontalScrollIndicator={false}
                             numColumns={data.feed.books.length / 2}
                             refreshing={data.networkStatus === 4}
                             keyExtractor={(item) => item.id}

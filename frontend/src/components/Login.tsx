@@ -11,23 +11,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import tw from 'twrnc';
 import { AUTH_TOKEN } from "../constants";
+import { Navigate } from "react-router-dom";
 
-const Login = ({navigation: {goBack, reset}}:any) => {
+const Login = ({navigation: {goBack, push}}:any) => {
     const [formState, setFormState] = useState({
         login: true,
         email: '',
         password: ''
     });
 
+
     const [login] = useMutation(LOGIN_MUTATION, {
         variables: {
             email: formState.email,
             password: formState.password
         },
-        onCompleted: ({ login }) => {
-            if(login) {
-                AsyncStorage.setItem(AUTH_TOKEN, login.token);
-                reset({routes: [{name: "BookFlix"}]})
+        onCompleted: async ({ login }) => {
+            try {
+                await AsyncStorage.setItem(AUTH_TOKEN, login.token);
+                push('Home');
+            } catch (error) {
+                console.log(error)
             }
         }
     });

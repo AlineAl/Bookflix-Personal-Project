@@ -23,7 +23,9 @@ const NavBar = () => {
         <SafeAreaView style={tw`bg-transparent h-16`}>
             <View style={tw`flex-row justify-between mt-6 mx-4`}>
                 <View>
-                    <Text style={styles.textStaatliches}>Bookflix</Text>
+                    <Pressable>
+                        <Text style={styles.textStaatliches}>Bookflix</Text>
+                    </Pressable>
                 </View>
                 <View style={tw`flex-row items-center`}>
                     <Link to={{screen:'SearchBook'}} style={tw`mr-8`}>

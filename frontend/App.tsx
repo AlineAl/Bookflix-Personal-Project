@@ -5,6 +5,7 @@ import OneBook from './src/components/Book';
 import SearchBook from './src/components/SearchBook';
 import Signup from './src/components/Signup';
 import Login from './src/components/Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AUTH_TOKEN } from './src/constants';
 import { setContext } from '@apollo/client/link/context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -25,8 +26,8 @@ const httpLink = createHttpLink({
   uri: ENDPOINT_API
 });
 
-const authLink = setContext((_:any, { headers }:any) => {
-  const token = localStorage.getItem(AUTH_TOKEN);
+const authLink = setContext( async (_:any, { headers }:any) => {
+  const token = await AsyncStorage.getItem(AUTH_TOKEN);
   return {
     headers: {
       ...headers,
