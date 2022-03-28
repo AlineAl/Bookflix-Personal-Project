@@ -41,24 +41,22 @@ const BooksList = ({ navigation: { navigate, goBack }}:any) => {
                     <Header />
                     <Text style={tw`text-white text-lg font-bold mt-6 ml-4`}>Liste de livres</Text>
 
-                    <ScrollView horizontal>
-                        <FlatList
-                            style={tw`mt-4 mx-1`}
-                            data={data.feed.books}
-                            numColumns={data.feed.books.length / 2}
-                            refreshing={data.networkStatus === 4}
-                            keyExtractor={(item) => item.id}
-                            renderItem={({ item }) =>
-                                <View>
-                                    <Pressable onPress={() => {
-                                        toggleModal(item.id, item.title, item.body, item.date, item.genre, item.url, item.author)
-                                    }}>
-                                        <Image style={tw`w-26 h-36 ml-2 mb-8 rounded`} source={{uri:`${item.url}`}} />
-                                    </Pressable>
-                                </View>
-                            }
-                        />
-                    </ScrollView>
+                    <FlatList
+                        style={tw`mt-4 mx-1`}
+                        data={data.feed.books}
+                        horizontal
+                        refreshing={data.networkStatus === 4}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) =>
+                            <View>
+                                <Pressable onPress={() => {
+                                    toggleModal(item.id, item.title, item.body, item.date, item.genre, item.url, item.author)
+                                }}>
+                                    <Image style={tw`w-26 h-36 ml-2 mb-8 rounded`} source={{uri:`${item.url}`}} />
+                                </Pressable>
+                            </View>
+                        }
+                    />
 
                     <Modal 
                         isVisible={isModalVisible}
