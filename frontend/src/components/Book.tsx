@@ -15,6 +15,7 @@ const OneBook = (props:any) => {
             bookId: id
         }
     });
+    console.log
 
     return(
         <ScrollView style={tw`bg-black`}>
@@ -42,6 +43,12 @@ const OneBook = (props:any) => {
                     <Text style={tw`text-white ml-3 mt-2`}>{data.book.body}</Text>
                     <View style={tw`flex flex-row justify-center mt-2`}>
                         <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faHeart } />
+                        {
+                            data.book.likers.length === 0 ? <Text></Text> :
+                            <View>
+                                <Text style={tw`text-white text-xl ml-1`}>{data.book.likers.length}</Text>
+                            </View>
+                        }
                     </View>
                 </View>
             }

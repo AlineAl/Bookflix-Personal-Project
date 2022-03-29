@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, StyleSheet, TextInput, Pressable } from "react-native";
+import { ScrollView, View, Text, StyleSheet, TextInput, Pressable } from "react-native";
 import LOGIN_MUTATION from "../graphql/LoginMutation";
 import { useMutation } from "@apollo/client";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import tw from 'twrnc';
 import { AUTH_TOKEN } from "../constants";
-import { Navigate } from "react-router-dom";
 
 const Login = ({navigation: {goBack, push}}:any) => {
     const [formState, setFormState] = useState({
@@ -45,7 +44,7 @@ const Login = ({navigation: {goBack, push}}:any) => {
     }
     
     return(
-        <SafeAreaView style={tw`bg-black h-full`}>
+        <ScrollView style={tw`bg-black h-full`}>
             <View style={tw`flex flex-row items-center mt-10 ml-4`}>
                 <Pressable onPress={() => {
                     goBack("Home")
@@ -54,7 +53,7 @@ const Login = ({navigation: {goBack, push}}:any) => {
                 </Pressable>
                 <Text style={styles.textStaatliches}>Bookflix</Text>
             </View>
-            <View style={tw`mt-30 mx-6 bg-zinc-600 rounded`}>
+            <View style={formState.email ? tw`mt-30 mx-6 bg-zinc-600 rounded` : tw`mt-30 mx-6 bg-zinc-600 rounded border-2 border-[#B82C2B]`}>
                 <Text style={tw`ml-2 mt-2 text-white text-xs`}>E-mail</Text>
                 <TextInput 
                     style={tw`ml-2 mb-4`}
@@ -67,9 +66,11 @@ const Login = ({navigation: {goBack, push}}:any) => {
                     value={formState.email}
                 />
             </View>
-            <View style={tw`mt-4 mx-6 bg-zinc-600 rounded`}>
+                {formState.email ? <Text style={tw`m-0 p-0`}></Text> : <Text style={tw`ml-6 text-[#B82C2B]`}>Veuillez entrer votre e-mail pour vous logger</Text>}
+            <View style={formState.password ? tw`mt-6 mx-6 bg-zinc-600 rounded` : tw`mt-6 mx-6 bg-zinc-600 rounded border-2 border-[#B82C2B]`}>
                 <Text style={tw`ml-2 mt-2 text-white text-xs`}>Mot de passe</Text>
-                <TextInput 
+                <TextInput
+                    secureTextEntry={true}
                     style={tw`ml-2 mb-4`}
                     onChangeText={(event) => {
                         setFormState({
@@ -80,10 +81,17 @@ const Login = ({navigation: {goBack, push}}:any) => {
                     value={formState.password}
                 />
             </View>
-            <Pressable onPress={() => login()}>
+                {formState.password ? <Text style={tw`m-0 p-0`}></Text> : <Text style={tw`ml-6 text-[#B82C2B]`}>Veuillez entrer votre mot de passe pour vous logger</Text>}
+            <Pressable onPress={() => {
+                if(formState.password && formState.email) {
+                    login()
+                } else {
+                    alert("Veuillez remplir tous les champs")
+                }
+            }}>
                 <Text style={tw`text-white text-lg mt-8 mx-8 border-white border-2 rounded text-center bg-black py-2`}>S'identifier</Text>
             </Pressable>
-        </SafeAreaView>
+        </ScrollView>
     )
 }
 

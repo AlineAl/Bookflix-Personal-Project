@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, View, Image, StyleSheet, Pressable } from 'react-native';
+import { SafeAreaView, Text, View, Image, StyleSheet } from 'react-native';
 import { Link } from '@react-navigation/native';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -23,15 +23,17 @@ const NavBar = () => {
         <SafeAreaView style={tw`bg-transparent h-16`}>
             <View style={tw`flex-row justify-between mt-6 mx-4`}>
                 <View>
-                    <Pressable>
+                    <Link to={{screen:'Home'}}>
                         <Text style={styles.textStaatliches}>Bookflix</Text>
-                    </Pressable>
+                    </Link>
                 </View>
                 <View style={tw`flex-row items-center`}>
                     <Link to={{screen:'SearchBook'}} style={tw`mr-8`}>
                         <FontAwesomeIcon style={tw`text-white`} icon={ faMagnifyingGlass } />
                     </Link>
-                    <Image style={tw`w-6 h-6`} source={{uri:'https://images.unsplash.com/photo-1626423567486-9c5fcb38199f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=706&q=80'}} />
+                    <Link to={{screen:'MyProfile'}}>
+                        <Image style={tw`w-6 h-6`} source={{uri:'https://images.unsplash.com/photo-1626423567486-9c5fcb38199f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=706&q=80'}} />
+                    </Link>
                 </View>
             </View>
         </SafeAreaView>

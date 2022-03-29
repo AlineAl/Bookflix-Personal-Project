@@ -66,14 +66,14 @@ const Home = ({ navigation: { navigate, push }}:any) => {
                             await AsyncStorage.removeItem(AUTH_TOKEN);
                             push("Home")
                         }}>
-                            <Text style={tw`text-white text-center mt-8`}>Deconnexion</Text>
+                            <Text style={tw`text-white text-center mt-8`}>Déconnexion</Text>
                         </Pressable>
                     :
                         <Pressable onPress={() =>{
                             navigate("Signup")
                         }
                         }>
-                            <Text style={tw`text-white text-lg uppercase mt-10 text-center bg-[#E50815] py-2`}>Commencer</Text>
+                            <Text style={tw`text-white text-lg uppercase mt-10 text-center bg-[#E50815] sm:bg-purple-500 py-2`}>Commencer</Text>
                         </Pressable>
                 }
             </ImageBackground>

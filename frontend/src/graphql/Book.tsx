@@ -11,6 +11,9 @@ const GET_ONE_BOOK = gql`
             date
             genre
             url
+            likers {
+                id
+            }
         }
     }
 `

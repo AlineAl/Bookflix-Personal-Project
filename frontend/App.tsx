@@ -5,6 +5,7 @@ import OneBook from './src/components/Book';
 import SearchBook from './src/components/SearchBook';
 import Signup from './src/components/Signup';
 import Login from './src/components/Login';
+import MyProfile from './src/components/Profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AUTH_TOKEN } from './src/constants';
 import { setContext } from '@apollo/client/link/context';
@@ -52,6 +53,7 @@ export default function App() {
             <Stack.Screen name="BookFlix" component={BooksList} />
             <Stack.Screen name="Book" component={OneBook} />
             <Stack.Screen name="SearchBook" component={SearchBook} />
+            <Stack.Screen name="MyProfile" component={MyProfile} />
           </Stack.Navigator>
         </NavigationContainer>
     </ApolloProvider>
