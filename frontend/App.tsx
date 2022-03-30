@@ -6,6 +6,7 @@ import SearchBook from './src/components/SearchBook';
 import Signup from './src/components/Signup';
 import Login from './src/components/Login';
 import MyProfile from './src/components/Profile';
+import './style.css';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AUTH_TOKEN } from './src/constants';
 import { setContext } from '@apollo/client/link/context';

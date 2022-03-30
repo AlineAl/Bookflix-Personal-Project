@@ -76,25 +76,25 @@ const BooksList = ({ navigation: { navigate, push }}:any) => {
                         swipeDirection={['up', 'left', 'right', 'down']}
                         style={tw`m-0 flex justify-end`}
                     >
-                        <View style={tw`w-full h-56 bg-[#181818] rounded-t-xl`}>
+                        <View style={tw`w-full h-66 bg-[#181818] rounded-t-xl`}>
                             <View style={tw`flex flex-row justify-around mt-2`}>
-                                <Image style={tw`w-23 h-33 mr-3 ml-2 rounded`} source={{uri:`${urlBook}`}} />
-                                <View style={tw`w-60 ml-2`}>
+                                <Image style={tw`w-20 h-33 ml-1 rounded`} source={{uri:`${urlBook}`}} />
+                                <View style={tw`w-50 ml-2`}>
                                     <Text style={tw`text-white text-base font-bold`}>{titleBook}</Text>
                                     <View style={tw`flex flex-row`}>
-                                        <Text style={tw`text-[#BABABA] mr-4 text-xs`}>{dateBook}</Text>
-                                        <Text style={tw`text-[#BABABA] mr-4 text-xs`}>{authorBook}</Text>
+                                        <Text style={tw`text-[#BABABA] mr-2 text-xs`}>{dateBook}</Text>
+                                        <Text style={tw`text-[#BABABA] mr-2 text-xs`}>{authorBook}</Text>
                                         <Text style={tw`text-[#BABABA] text-xs`}>{genreBook}</Text>
                                     </View>
-                                    <View style={tw`mt-2 w-68`}>
-                                        <Text style={tw`text-white mr-4 text-xs overflow-hidden h-26`}>{bodyBook}</Text>
+                                    <View style={tw`mt-2 w-60`}>
+                                        <Text style={tw`text-white mr-4 text-xs overflow-hidden h-28`}>{bodyBook}</Text>
                                     </View>
                                 </View>
                                 <View>
                                     <Pressable onPress={() => {
                                             toggleModal(idBook, titleBook, bodyBook, dateBook, genreBook, urlBook, authorBook, likesBook)
                                         }}>
-                                        <View style={tw`mr-2`}><FontAwesomeIcon size={ 27 } style={tw`text-white bg-[#252526] rounded-full`} icon={ faXmark } /></View>
+                                        <View><FontAwesomeIcon size={ 27 } style={tw`text-white bg-[#252526] rounded-full`} icon={ faXmark } /></View>
                                     </Pressable>
                                 </View>
                             </View>
@@ -103,6 +103,7 @@ const BooksList = ({ navigation: { navigate, push }}:any) => {
                                     navigate("Book", {
                                         id: idBook
                                     })
+                                    toggleModal(idBook, titleBook, bodyBook, dateBook, genreBook, urlBook, authorBook, likesBook);
                                 }}>
                                     <View style={tw`mr-4`}>
                                         <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faPlay } />

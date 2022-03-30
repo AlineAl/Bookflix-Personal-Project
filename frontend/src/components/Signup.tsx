@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import { Platform } from "react-native";
 import SIGNUP_MUTATION from '../graphql/SignupMutation';
 import { useMutation } from "@apollo/client";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -12,6 +13,7 @@ const Signup = ({ navigation: {goBack, push}}:any) => {
         email: '',
         password: ''
     });
+
     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const email = regexEmail.test(formState.email);
     const regexPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -25,7 +27,7 @@ const Signup = ({ navigation: {goBack, push}}:any) => {
             email: formState.email,
             password: formState.password
         }
-    })
+    });
     
     return(
         <ScrollView style={tw`mt-12`}>
@@ -40,8 +42,8 @@ const Signup = ({ navigation: {goBack, push}}:any) => {
             </View> 
             <View style={username ? [tw`mt-2 mx-6 border-blue-500 border-2 rounded`] : [tw`mt-2 mx-6 border-[#B82C2B] border-2 rounded`]}>
                 <Text style={tw`ml-2 mt-2 text-zinc-500 text-xs`}>Username</Text>
-                <TextInput 
-                    style={tw`ml-2 mb-2`}
+                <TextInput
+                    style={tw`mx-2 mb-2`}
                     onChangeText={(event) => {
                         setFormState({
                             ...formState,
@@ -55,7 +57,7 @@ const Signup = ({ navigation: {goBack, push}}:any) => {
             <View style={email ? [tw`mt-2 mx-6 border-blue-500 border-2 rounded`] : [tw`mt-2 mx-6 border-[#B82C2B] border-2 rounded`]}>
                 <Text style={tw`ml-2 mt-2 text-zinc-500 text-xs`}>E-mail</Text>
                 <TextInput 
-                    style={tw`ml-2 mb-2`}
+                    style={tw`ml-2 mb-2 border-none`}
                     onChangeText={(event) => {
                         setFormState({
                             ...formState,

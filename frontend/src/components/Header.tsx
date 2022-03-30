@@ -64,7 +64,7 @@ const Header = () => {
                 <Text style={tw`text-white text-xs`}>Voyage</Text>
             </View>
             <View>
-                <Pressable style={tw`bg-white flex-row justify-center mt-4 mx-26 py-2 rounded`} 
+                <Pressable style={tw`bg-white flex-row justify-center mt-4 mx-22 py-2 rounded`} 
                     onPress={() => {
                         toggleModal();
                     }}>

@@ -56,7 +56,7 @@ const Home = ({ navigation: { navigate, push }}:any) => {
                     }
                 </View>
                 <View>
-                    <Text style={tw`text-white font-bold text-4xl text-center mt-86 mx-3`}>Je vous partage ici les livres qui ont marqué ma vie</Text>
+                    <Text style={tw`text-white font-bold text-4xl text-center mt-60 mx-3`}>Je vous partage ici les livres qui ont marqué ma vie</Text>
                     <Text style={tw`text-white mx-3 text-center mt-8`}>Petit projet d'entraînement personnel fait par ❤️ avec React-Native, Expo, TailwindCSS, ApolloGraphQL, Prisma, Nexus et PostgreSQL</Text>
                 </View>
 
@@ -73,7 +73,7 @@ const Home = ({ navigation: { navigate, push }}:any) => {
                             navigate("Signup")
                         }
                         }>
-                            <Text style={tw`text-white text-lg uppercase mt-10 text-center bg-[#E50815] sm:bg-purple-500 py-2`}>Commencer</Text>
+                            <Text style={tw`text-white text-lg uppercase mt-6 text-center bg-[#E50815] sm:bg-purple-500 py-2`}>Commencer</Text>
                         </Pressable>
                 }
             </ImageBackground>

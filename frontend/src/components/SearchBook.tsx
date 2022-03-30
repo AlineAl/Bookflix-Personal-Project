@@ -29,7 +29,7 @@ const SearchBook = (props:any) => {
 
     return(
         <ScrollView style={tw`bg-black`}>
-            <View style={tw`flex flex-row justify-between mt-10 ml-4`}>
+            <View style={tw`flex flex-row justify-between mt-5 ml-4`}>
                 <Pressable onPress={() => props.navigation.navigate("BookFlix")}>
                     <FontAwesomeIcon style={tw`text-white mr-8`} size={ 20 } icon={ faArrowLeft }/>
                 </Pressable>
@@ -54,16 +54,22 @@ const SearchBook = (props:any) => {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) =>
                     <View style={tw`flex flex-row items-center bg-[#181818] mb-1`}>
-                        <Image style={tw`w-36 h-20 ml-2 rounded opacity-75`} source={{uri:`${item.url}`}} />
-                        <Text style={tw`text-white ml-4 mr-8`}>{item.title}</Text>
-                        <Pressable onPress={() => {
-                                props.navigation.navigate("Book", {
-                                    id: item.id
-                                })
-                            }
-                        }>
-                            <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faPlay } />
-                        </Pressable>
+                        <View style={tw`flex flex-row items-center bg-[#181818] mb-1`}>
+                            <Image style={tw`w-32 h-16 ml-2 rounded opacity-75`} source={{uri:`${item.url}`}} />
+                            <View style={tw`w-40`}>
+                                <Text style={tw`text-white ml-4 mr-8`}>{item.title}</Text>
+                            </View>
+                        </View>
+                        <View>
+                            <Pressable onPress={() => {
+                                    props.navigation.navigate("Book", {
+                                        id: item.id
+                                    })
+                                }
+                            }>
+                                <FontAwesomeIcon size={ 30 } style={tw`text-white`} icon={ faPlay } />
+                            </Pressable>
+                        </View>
                     </View>
                 }
             />

@@ -56,7 +56,7 @@ const Login = ({navigation: {goBack, push}}:any) => {
             <View style={formState.email ? tw`mt-30 mx-6 bg-zinc-600 rounded` : tw`mt-30 mx-6 bg-zinc-600 rounded border-2 border-[#B82C2B]`}>
                 <Text style={tw`ml-2 mt-2 text-white text-xs`}>E-mail</Text>
                 <TextInput 
-                    style={tw`ml-2 mb-4`}
+                    style={tw`ml-2 mb-4 text-white`}
                     onChangeText={(event) => {
                         setFormState({
                             ...formState,
@@ -71,7 +71,7 @@ const Login = ({navigation: {goBack, push}}:any) => {
                 <Text style={tw`ml-2 mt-2 text-white text-xs`}>Mot de passe</Text>
                 <TextInput
                     secureTextEntry={true}
-                    style={tw`ml-2 mb-4`}
+                    style={tw`ml-2 mb-4 text-white`}
                     onChangeText={(event) => {
                         setFormState({
                             ...formState,
