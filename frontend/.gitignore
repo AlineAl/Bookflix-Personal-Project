@@ -10,7 +10,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
-src/constants
+src/constants/
 
 
 # macOS
